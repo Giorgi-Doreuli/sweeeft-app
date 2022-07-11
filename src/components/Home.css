@@ -1,0 +1,13 @@
+.profileList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+
+.home{
+    margin: auto;
+    max-width: 90%;
+    margin-top: 20px;
+}
