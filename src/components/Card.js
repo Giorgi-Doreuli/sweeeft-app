@@ -10,7 +10,7 @@ function Card(props) {
         <div className='profile'>
             <img src={props.image+'?v='+props.id} alt={props.name} className='img'/>
             <h3 className='name'>{props.name}</h3>
-            <p clasaName='title'>{props.title}</p>
+            <p className='title'>{props.title}</p>
         </div>
     </div>
   )
