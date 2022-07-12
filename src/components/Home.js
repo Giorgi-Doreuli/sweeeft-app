@@ -1,4 +1,5 @@
 import React, {useState,useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import './Home.css'
 import Card from './Card.js'
 
@@ -42,9 +43,11 @@ function Home() {
         <div className='profileList'>
             {showList ?
             profiles.map((item) =>
+            <Link to='profile' className='link'>
                 <div className='cardList'>
                     <Card name={item.name} title={item.title} image={item.imageUrl} id={item.id}/>
                 </div>
+            </Link>
                     )
             : ''}
         </div>
