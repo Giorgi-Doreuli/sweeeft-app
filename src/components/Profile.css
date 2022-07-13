@@ -1,0 +1,102 @@
+.profilePage{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.profilePageContent{
+    width: 1200px;
+    display: flex;
+    margin-top: 20px;
+    gap: 30px;
+}
+
+.profile-info{
+    padding-left: 10px;
+    flex:1;
+}
+
+.info-p{
+    position: relative;
+    background-color: #fff;
+    top: -25px;
+    margin-bottom: -25px;
+    left: 20px;
+    width: 30px;
+    text-align: center;
+}
+
+.address-p{
+    position: relative;
+    background-color: #fff;
+    top: -35px;
+    margin-bottom: -25px;
+    left: 20px;
+    width: 60px;
+    text-align: center;
+}
+
+.info-name-title{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-top: 8px;
+    padding-bottom: 20px;
+}
+
+.info-emails{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.profile-address-info > *{
+    margin: 0;
+}
+
+.profile-company-info > *{
+    margin: 0;
+}
+
+.info-emails  > * {
+    margin: 0;
+}
+
+.info-name-title > * {
+    margin: 0;
+}
+
+
+.profile-img{
+    height: 100%;
+    object-fit: contain;
+}
+
+.profile-address{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.profile-info{
+    width: 50%;
+    border: 1px solid grey;
+}
+
+.profile-address{
+    border: 1px solid grey;
+    padding: 10px;
+}
+
+
+.profile-address-info{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}

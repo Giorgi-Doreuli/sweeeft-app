@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import './Home.css'
 import Card from './Card.js'
 
-function Home() {
+function Home(props) {
 
     const [profiles, setProfiles] = useState([]);
     const [showList, setShowList] = useState(false);
@@ -38,12 +38,17 @@ function Home() {
 
 
 
+        const setProfile = (id) => {
+            sessionStorage.setItem('id', id);
+        }
+
+
   return (
     <div className='home'>
         <div className='profileList'>
             {showList ?
             profiles.map((item) =>
-            <Link to='profile' className='link'>
+            <Link to='profile' className='link' onClick={() => setProfile(item.id)}>
                 <div className='cardList'>
                     <Card name={item.name} title={item.title} image={item.imageUrl} id={item.id}/>
                 </div>
