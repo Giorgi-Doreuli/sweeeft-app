@@ -4,6 +4,8 @@ import './Profile.css'
 import Card from './Card'
 
 function Profile(props) {
+  const {idNum} = useParams();
+  const [id, setId] = useState(idNum); 
   const [clickedUser, setClickedUser] = useState([]);
   const [companyInfo, setCompany] = useState([]);
   const [addressInfo, setAddressInfo] = useState([]);
@@ -11,8 +13,8 @@ function Profile(props) {
   const loading = true;
   const [finalFriends, setFinalFriends] = useState([]);
   const [page, setPage] = useState(1);
-  const {idNum} = useParams();
   const filteredVisitors = JSON.parse(sessionStorage.getItem('visitedProfiles'));
+  const navigate = useNavigate();
 
   const getClickedProfile = async (id) => {
     const api = 'http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user/'+id;
@@ -22,6 +24,8 @@ function Profile(props) {
     setCompany(fetchedProfile.company);
     setAddressInfo(fetchedProfile.address);
     props.setVisitedProfiles(oldArr => [...oldArr, fetchedProfile.name]);
+    setFinalFriends([]);
+    getFriends(page, id);
 }
 
 const getFriends = async (page, id) => {
@@ -31,6 +35,7 @@ const getFriends = async (page, id) => {
     const friendsReady = fetchedFriends.list;
     setFinalFriends(finalFriends.concat(friendsReady));
     setShowFriends(true);
+    console.log(finalFriends);
 }
 
 const finalFilteredVisitors = filteredVisitors.filter((item, pos) => {
@@ -40,6 +45,8 @@ const finalFilteredVisitors = filteredVisitors.filter((item, pos) => {
 
   useEffect(() =>{
     getClickedProfile(idNum);
+    setId(idNum);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idNum]);
 
   const onScroll = () => {
@@ -56,11 +63,9 @@ const finalFilteredVisitors = filteredVisitors.filter((item, pos) => {
 
     useEffect(() =>{
       window.addEventListener('scroll', onScroll);
-      getFriends(page, idNum);
-  }, [page, idNum]);
-
-
-  const navigate = useNavigate();
+      getFriends(page, id);
+       // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
     return (
     <div className="profilePage">
@@ -105,7 +110,7 @@ const finalFilteredVisitors = filteredVisitors.filter((item, pos) => {
           <div className="friendsContent">
                 <div className="visitedFriendsList">
                     {finalFilteredVisitors.map((item) => 
-                    <div className="visitedFriend">
+                    <div  className="visitedFriend">
                           <h4>{item}</h4>
                     </div>
                       )}

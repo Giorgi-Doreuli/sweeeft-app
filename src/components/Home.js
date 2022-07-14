@@ -9,7 +9,6 @@ function Home(props) {
     const [showList, setShowList] = useState(false);
     const [page, setPage] = useState(1);
     const loading = true;
-    const visitedProfiles = [];
 
     const getProfile = async (page) => {
         const api = 'http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user/' + page + '/24';
@@ -36,6 +35,7 @@ function Home(props) {
     useEffect(() =>{
         getProfile(page);
         window.addEventListener('scroll', onScroll);
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page]);
 
 
