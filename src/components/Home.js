@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import './Home.css'
 import Card from './Card.js'
 
@@ -9,6 +9,7 @@ function Home(props) {
     const [showList, setShowList] = useState(false);
     const [page, setPage] = useState(1);
     const loading = true;
+    const visitedProfiles = [];
 
     const getProfile = async (page) => {
         const api = 'http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user/' + page + '/24';
@@ -31,16 +32,20 @@ function Home(props) {
         }
         }
 
+
     useEffect(() =>{
         getProfile(page);
         window.addEventListener('scroll', onScroll);
     }, [page]);
 
 
-
-        const setProfile = (id) => {
+        const setProfile = (id, name) => {
             sessionStorage.setItem('id', id);
+            props.setVisitedProfiles(oldArr => [...oldArr, name]);
         }
+
+
+        const navigate = useNavigate();
 
 
   return (
@@ -48,11 +53,9 @@ function Home(props) {
         <div className='profileList'>
             {showList ?
             profiles.map((item) =>
-            <Link to='profile' className='link' onClick={() => setProfile(item.id)}>
-                <div className='cardList'>
-                    <Card name={item.name} title={item.title} image={item.imageUrl} id={item.id}/>
+                <div className='cardList' onClick={() => {setProfile(item.id, item.name); navigate(`/user/${item.id}`) }} >
+                    <Card name={item.name} prefix={item.prefix} title={item.title} image={item.imageUrl} id={item.id}/>
                 </div>
-            </Link>
                     )
             : ''}
         </div>

@@ -7,8 +7,17 @@
 }
 
 .profileContent{
-    width: 1200px;
     display: flex;
+    gap: 20px;
+}
+
+.ProfilecontentPage{
+    border: 1px solid grey;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 1200px;
     margin-top: 20px;
     gap: 30px;
 }
@@ -18,11 +27,20 @@
     flex:1;
 }
 
+.visitedFriendsList{
+    display: flex;
+    gap: 10px;
+}
+
 .friends-list{
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 20px;
+}
+
+.friends{
+    flex-grow: 1;
 }
 
 .info-p{
@@ -81,10 +99,10 @@
     margin: 0;
 }
 
-
-.profile-img{
-    height: 100%;
-    object-fit: contain;
+.info-name-prefix{
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .profile-address{
@@ -117,3 +135,14 @@
 .friends-text{
     text-align: left;
 }
+
+@media only screen and (max-width: 1250px) {
+    .profileContent{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .profile-img{
+        width: 1200px;
+    }
+  }
