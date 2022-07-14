@@ -2,9 +2,11 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
-.profilePageContent{
+.profileContent{
     width: 1200px;
     display: flex;
     margin-top: 20px;
@@ -14,6 +16,13 @@
 .profile-info{
     padding-left: 10px;
     flex:1;
+}
+
+.friends-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
 }
 
 .info-p{
@@ -99,4 +108,12 @@
     display: flex;
     flex-direction: column;
     gap: 7px;
+}
+
+.friendsContent{
+    width: 1200px;
+}
+
+.friends-text{
+    text-align: left;
 }

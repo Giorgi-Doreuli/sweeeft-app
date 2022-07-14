@@ -1,11 +1,17 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import './Profile.css'
+import Card from './Card'
 
 function Profile() {
   const Id = sessionStorage.getItem('id');
   const [clickedUser, setClickedUser] = useState([]);
   const [companyInfo, setCompany] = useState([]);
   const [addressInfo, setAddressInfo] = useState([]);
+  const [friends, setFriends] = useState([]);
+  const [showFriends, setShowFriends] = useState(false);
+  const loading = true;
+  const [page, setPage] = useState(1);
 
   const getClickedProfile = async (id) => {
     const api = 'http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user/'+id;
@@ -16,15 +22,44 @@ function Profile() {
     setAddressInfo(fetchedProfile.address);
 }
 
+const getFriends = async (page) => {
+    const friendsApi = 'http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user/'+sessionStorage.getItem('id')+'/friends/'+page+'/24';
+    const fetchFriends = await fetch(friendsApi);
+    const fetchedFriends = await fetchFriends.json();
+    const friendsReady = fetchedFriends.list;
+    setFriends(friends.concat(friendsReady));
+    setShowFriends(true);
+}
 
+const setProfile = (id) => {
+  sessionStorage.setItem('id', id);
+}
 
   useEffect(() =>{
     getClickedProfile(Id);
-  }, [Id]);
+  }, [Id, page]);
+
+  const onScroll = () => {
+    const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    const windowBottom = windowHeight + window.pageYOffset;
+    
+    if (windowBottom >= docHeight-1) {
+        setPage(page + 1);
+    }
+    }
+
+    useEffect(() =>{
+      getFriends(page);
+      window.addEventListener('scroll', onScroll);
+  }, [page]);
+
 
     return (
     <div className="profilePage">
-        <div className="profilePageContent">
+        <div className="profileContent">
             <div className="profile-img">
               <img src={clickedUser.imageUrl + '?v=' + clickedUser.id} alt={clickedUser.name} className="img"/>
             </div>
@@ -57,6 +92,22 @@ function Profile() {
                     <p className="address-zipCode"><u>zipCode:</u> {addressInfo.zipCode}</p>
                 </div>
             </div>
+        </div>
+        <div className="friendsContent">
+              <h2 className="friends-text">Friends:</h2>
+              <div className="friends-list">
+                  {showFriends ? 
+                  friends.map((item) => 
+                  <Link to='profile' className='link' onClick={() => setProfile(item.id)}>
+                  <div className='friends'>
+                      <Card name={item.name} title={item.title} image={item.imageUrl} id={item.id}/>
+                  </div>
+              </Link>
+                  ):''}
+              </div>
+              <div className='loading'>
+                {loading ? <div id='spinner'></div> : ''}
+              </div>
         </div>
     </div>
   )
