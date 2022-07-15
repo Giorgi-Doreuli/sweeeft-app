@@ -13,8 +13,9 @@ function Profile(props) {
   const loading = true;
   const [finalFriends, setFinalFriends] = useState([]);
   const [page, setPage] = useState(1);
-  const filteredVisitors = JSON.parse(sessionStorage.getItem('visitedProfiles'));
+  const ProfileVisitors = JSON.parse(sessionStorage.getItem('visitedProfiles'));
   const navigate = useNavigate();
+  const arrow = '>';
 
   const getClickedProfile = async (id) => {
     const api = 'http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user/'+id;
@@ -26,6 +27,7 @@ function Profile(props) {
     props.setVisitedProfiles(oldArr => [...oldArr, fetchedProfile.name]);
     setFinalFriends([]);
     getFriends(page, id);
+    console.log(FilteredVisitors);
 }
 
 const getFriends = async (page, id) => {
@@ -35,13 +37,11 @@ const getFriends = async (page, id) => {
     const friendsReady = fetchedFriends.list;
     setFinalFriends(finalFriends.concat(friendsReady));
     setShowFriends(true);
-    console.log(finalFriends);
 }
 
-const finalFilteredVisitors = filteredVisitors.filter((item, pos) => {
-  return filteredVisitors.indexOf(item) === pos;
+const FilteredVisitors = ProfileVisitors.filter((item, pos) => {
+  return ProfileVisitors.indexOf(item) === pos;
 })
-
 
   useEffect(() =>{
     getClickedProfile(idNum);
@@ -109,8 +109,9 @@ const finalFilteredVisitors = filteredVisitors.filter((item, pos) => {
           </div>
           <div className="friendsContent">
                 <div className="visitedFriendsList">
-                    {finalFilteredVisitors.map((item) => 
+                    {FilteredVisitors.map((item, index) => 
                     <div  className="visitedFriend">
+                          {index>0 ? <h4>{arrow}</h4> : ''}
                           <h4>{item}</h4>
                     </div>
                       )}
